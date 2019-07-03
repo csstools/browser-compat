@@ -1,0 +1,67 @@
+{
+  "name": "browser-compat",
+  "version": "1.1.30001064",
+  "internal-version": "0.1.0",
+  "description": "normalized browser compatibility data from caniuse and mdn",
+  "author": "Jonathan Neal <jonathantneal@hotmail.com>",
+  "license": "CC0-1.0",
+  "repository": "csstools/browser-compat",
+  "homepage": "https://github.com/csstools/browser-compat#readme",
+  "bugs": "https://github.com/csstools/browser-compat/issues",
+  "main": "index.js",
+  "files": [
+    "caniuse.json",
+    "css.json",
+    "html.json",
+    "index.js",
+    "js.json",
+    "mathml.json",
+    "mdn.json",
+    "svg.json"
+  ],
+  "scripts": {
+    "build": "npm run build:install && npm run build:json",
+    "build:json": "node src/build",
+    "build:install": "npm install --save-dev caniuse-lite@latest && npm install --save-dev mdn-browser-compat-data@latest",
+    "postbuild:json": "npm run postbuild:json:caniuse && npm run postbuild:json:mdn",
+    "postbuild:json:caniuse": "gzip-size caniuse.json",
+    "postbuild:json:mdn": "gzip-size mdn.json",
+    "prepublishOnly": "npm test",
+    "test": "npm run test:js",
+    "test:js": "eslint src/{*,**/*}.js --cache --ignore-path .gitignore --quiet",
+    "watch": "npm run build:install && npm run watch:exec",
+    "watch:exec": "nodemon --exec \"npm run build:json\" --watch src"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "caniuse-lite": "^1.0.30000979",
+    "eslint": "^5.16.0",
+    "gzip-size-cli": "^3.0.0",
+    "mdn-browser-compat-data": "0.0.85",
+    "nodemon": "^1.19.1",
+    "pre-commit": "^1.2.2"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es6": true,
+      "node": true
+    },
+    "extends": "eslint:recommended",
+    "root": true
+  },
+  "keywords": [
+    "browser",
+    "caniuse",
+    "compatibility",
+    "data",
+    "feature",
+    "mdn",
+    "support",
+    "version"
+  ]
+}
